@@ -47,16 +47,16 @@ const variations = {
     }
   `,
 };
-const Button=styled.button`
- border: none;
- border-radius: var(--border-radius-sm);
- box-shadow: var(--shadow-sm);
- font-size: 1.4rem;
- padding:1.2rem 1.4rem;
- font-weight: 500;
- color: var(--color-brand-50);
- background-color: var(--color-brand-600);
- cursor:pointer;
+const Button = styled.button`
+  border: none;
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-sm);
+  ${(props) => sizes[props.size]}
+  ${(props) => variations[props.varition]}
+`;
+Button.defaultProps = {
+  size: "medium",
+  variation: "primary",
+};
 
-`
-export default Button
+export default Button;
