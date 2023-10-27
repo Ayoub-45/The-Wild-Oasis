@@ -1,39 +1,34 @@
-import styled from "styled-components";
-import GlobalStyled from "./styles/GlobalStyles";
-import Button from "./ui/Button";
-import Heading from "./ui/Heading";
-import Input from "./ui/Input";
-import Row from "./ui/Row";
-const StyledApp = styled.div`
-  background-color: beige;
-  padding: 0.5rem;
-  width: 50%;
-  height: 50%;
-  margin: auto;
-`;
-
+import GlobalStyles from "./styles/GlobalStyles";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import PageNotFound from "./pages/PageNotFound";
+import Account from "./pages/Account";
+import Login from "./pages/Login";
+import Users from "./pages/Users";
+import Settings from "./pages/Settings";
+import Bookings from "./pages/Bookings";
+import Cabins from "./pages/Cabins";
+import { Navigate } from "react-router-dom";
+import Applayout from "./ui/Applayout";
 export default function App() {
   return (
     <>
-      <GlobalStyled />
-      <StyledApp>
-        <Row type="horizontal">
-          <Heading as="h1">Hello</Heading>
-          <div>
-            <Heading as="h2">Check in Check out</Heading>
-            <Button size="medium" varition="primary" onClick={() => alert("check in")}>
-              Check in
-            </Button>
-            <Button size="small" varition="secondary" onClick={() => alert("check out")}>Check out</Button>
-          </div>
-        </Row>
-        <form>
-          <Row>
-            <Input placeholder="number of guests" />
-            <Input placeholder="number of servers" />
-          </Row>
-        </form>
-      </StyledApp>
+      <GlobalStyles />
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Applayout />}>
+            <Route index element={<Navigate replace to="dashboard" />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="account" element={<Account />} />
+            <Route path="users" element={<Users />} />
+            <Route path="settings" element={<Settings />} />
+            <Route path="bookings" element={<Bookings />} />
+            <Route path="cabins" element={<Cabins />} />={" "}
+          </Route>
+          <Route path="*" element={<PageNotFound />} />
+          <Route path="login" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
