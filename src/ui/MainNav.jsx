@@ -94,27 +94,31 @@ export default function MainNav() {
         <li>
           <StyledNavLink to="/dashboard">
             <HiOutlineHome />
+            Dashboard
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/booking">
+          <StyledNavLink to="/bookings">
             <HiOutlineCalendarDays />
+            Bookings
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/cabins">
             <HiOutlineHomeModern />
+            Cabins
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/users">
-            <HiOutlineUsers />
+            <HiOutlineUsers /> Users
           </StyledNavLink>
         </li>
 
         <li>
           <StyledNavLink to="/settings">
             <HiOutlineCog6Tooth />
+            Settings
           </StyledNavLink>
         </li>
       </NavList>
