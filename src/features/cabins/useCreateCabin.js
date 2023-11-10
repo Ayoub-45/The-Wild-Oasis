@@ -13,5 +13,5 @@ export function useCreateCabin() {
     },
     onError: () => toast.onError("Cabin cannot be created"),
   });
-  return { createCabin, isCreating };
+  return { isCreating, createCabin };
 }
