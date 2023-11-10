@@ -5,57 +5,35 @@ import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import { createEditCabin } from "../../services/apiCabins";
-import toast from "react-hot-toast";
 import FormRow from "../../ui/FormRow";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { editCabin, isEditing } from "./useEditCabin";
+import { createCabin, isCreating } from "./useCreateCabin";
 function CreateCabinForm({ cabinToEdit = {} }) {
   const { id: editId, ...otherValues } = cabinToEdit;
   const isEditSession = Boolean(editId);
   const { register, handleSubmit, reset, getValues, formState } = useForm({
     defaultValues: isEditSession ? otherValues : {},
   });
-  const queryClient = useQueryClient();
-  const { mutate: createCabin, isLoading: isCreating } = useMutation({
-    mutationFn: createEditCabin,
-    onSuccess: function () {
-      toast.success("New cabin successfully created");
-      queryClient.invalidateQueries({ queryKey: ["cabins"] });
-      reset();
-    },
-    onError: function (err) {
-      toast.error(err.message);
-    },
-  });
-  const { mutate: editCabin, isLoading: isEditing } = useMutation({
-    mutationFn: ({ newCabinData, id }) => createEditCabin(newCabinData, id),
-    onSuccess: function () {
-      toast.success("New cabin successfully updated");
-      queryClient.invalidateQueries({ queryKey: ["cabins"] });
-      reset();
-    },
-    onError: function (err) {
-      toast.error(err.message);
-    },
-  });
   function onSubmit(data) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
     switch (isEditSession) {
       case true:
-        console.log(data);
         editCabin({ newCabinData: { ...data, image }, id: editId });
+        reset();
         break;
       case false:
         createCabin({ ...data, image });
+        reset();
         break;
       default:
         console.log("Operation Error");
     }
   }
+  const isWorking = isCreating || isEditing;
   const { errors } = formState;
   function onError(errors) {
     console.log(errors);
   }
-  const isWorking = isCreating || isEditing;
   return (
     <Form onSubmit={handleSubmit(onSubmit, onError)}>
       <FormRow label="Cabin name" error={errors?.name?.message}>
