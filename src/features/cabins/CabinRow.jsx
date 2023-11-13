@@ -80,7 +80,7 @@ export default function CabinRow({ cabin }) {
           <span>&mdash;</span>
         )}
         <div>
-          <button disabled={isDuplicating} onClick={() => handleDuplicate()}>
+          <button disabled={isDuplicating} onClick={handleDuplicate}>
             <HiSquare2Stack />
           </button>
           <button onClick={() => setShowForm((show) => !show)}>
@@ -89,7 +89,7 @@ export default function CabinRow({ cabin }) {
           <button onClick={() => deleteCabin(cabinId)} disabled={isDeleting}>
             <HiTrash />
           </button>
-        </div>
+        </div>s
       </TableRow>
       {isShowForm && <CreateCabinForm cabinToEdit={cabin} />}
     </>
