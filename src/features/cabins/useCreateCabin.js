@@ -11,7 +11,7 @@ export function useCreateCabin() {
         queryKey: ["cabins"],
       });
     },
-    onError: () => toast.onError("Cabin cannot be created"),
+    onError: () => toast.error("Cabin cannot be created"),
   });
   return { isCreating, createCabin };
 }
