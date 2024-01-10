@@ -1,3 +1,4 @@
+import { cloneElement, createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import { HiXMark } from "react-icons/hi2";
 import styled from "styled-components";
@@ -50,7 +51,26 @@ const Button = styled.button`
     color: var(--color-grey-500);
   }
 `;
-export default function Model({ children, onCloseModal }) {
+//Create context
+const ModalContext = createContext();
+export default function Modal({ children }) {
+  const [openName, setOpenName] = useState(" ");
+  const close = () => setOpenName("");
+  const open = setOpenName;
+  return (
+    <ModalContext.Provider value={{ openName, close, open }}>
+      {children}
+    </ModalContext.Provider>
+  );
+}
+function Open({ children, opens: opensWindowName }) {
+  const { open } = useContext(ModalContext);
+  return cloneElement(children, { onClick: () => open(opensWindowName) });
+}
+
+function Window({ children, name, onCloseModal }) {
+  const { openName, close } = useContext(ModalContext);
+  if (name !== openName) return null;
   return createPortal(
     <Overlay>
       <StyledModal>
@@ -63,3 +83,5 @@ export default function Model({ children, onCloseModal }) {
     document.body
   );
 }
+Modal.Window = Window;
+Modal.Open = Open;
